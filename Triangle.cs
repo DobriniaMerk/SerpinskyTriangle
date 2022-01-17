@@ -11,6 +11,8 @@ namespace SerpinskyTriangle
     internal class Triangle
     {
         public Vector2f[] points = new Vector2f[3];
+        public Vector2f position = new Vector2f(0, 0);
+
         public Triangle(Vector2f p1, Vector2f p2, Vector2f p3)
         {
             points[0] = p1;
@@ -33,6 +35,33 @@ namespace SerpinskyTriangle
             shape.SetPoint(2, points[2]);
             shape.FillColor = color;
             rw.Draw(shape);
+        }
+
+        public void Draw(Color color, RenderWindow rw, Vector2f displacement)
+        {
+            ConvexShape shape = new ConvexShape(3);
+            shape.SetPoint(0, points[0] + displacement);
+            shape.SetPoint(1, points[1] + displacement);
+            shape.SetPoint(2, points[2] + displacement);
+            shape.FillColor = color;
+            rw.Draw(shape);
+        }
+
+        
+        public void Draw(Color color, RenderWindow rw, Vector2f displacement, float scale)
+        {
+            ConvexShape shape = new ConvexShape(3);
+            shape.SetPoint(0, (points[0] + displacement) * scale);
+            shape.SetPoint(1, (points[1] + displacement) * scale);
+            shape.SetPoint(2, (points[2] + displacement) * scale);
+            shape.FillColor = color;
+            rw.Draw(shape);
+        }
+
+
+        public void toLocalCoords()
+        {
+            position = new Vector2f((points[1].X - points[2].X) / 2 + points[2].X, (((points[1].Y - points[2].Y) / 2 + points[2].Y) - points[0].Y) / 2 + points[0].Y);
         }
     }
 }
