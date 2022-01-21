@@ -27,28 +27,8 @@ namespace SerpinskyTriangle
             points[2] = t.points[2];
         }
 
-        public void Draw(Color color, RenderWindow rw)
-        {
-            ConvexShape shape = new ConvexShape(3);
-            shape.SetPoint(0, points[0]);
-            shape.SetPoint(1, points[1]);
-            shape.SetPoint(2, points[2]);
-            shape.FillColor = color;
-            rw.Draw(shape);
-        }
-
-        public void Draw(Color color, RenderWindow rw, Vector2f displacement)
-        {
-            ConvexShape shape = new ConvexShape(3);
-            shape.SetPoint(0, points[0] + displacement);
-            shape.SetPoint(1, points[1] + displacement);
-            shape.SetPoint(2, points[2] + displacement);
-            shape.FillColor = color;
-            rw.Draw(shape);
-        }
-
         
-        public void Draw(Color color, RenderWindow rw, Vector2f displacement, float scale)
+        public void Draw(Color color, RenderWindow rw, Vector2f displacement, float scale = 1)
         {
             ConvexShape shape = new ConvexShape(3);
             shape.SetPoint(0, (points[0] + displacement) * scale);
@@ -56,12 +36,6 @@ namespace SerpinskyTriangle
             shape.SetPoint(2, (points[2] + displacement) * scale);
             shape.FillColor = color;
             rw.Draw(shape);
-        }
-
-
-        public void toLocalCoords()
-        {
-            position = new Vector2f((points[1].X - points[2].X) / 2 + points[2].X, (((points[1].Y - points[2].Y) / 2 + points[2].Y) - points[0].Y) / 2 + points[0].Y);
         }
     }
 }

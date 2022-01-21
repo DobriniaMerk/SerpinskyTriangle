@@ -6,10 +6,10 @@ using SerpinskyTriangle;
 
 VideoMode vm = new VideoMode(800, 600);
 RenderWindow rw = new RenderWindow(vm, "Fractal");
-Fractal fractal = new Fractal(new Vector2f(400, 300));
+Fractal fractal = new Fractal();
 
 bool lmb = false;
-Vector2f mDisp = new Vector2f(0, 0);
+Vector2f mDisp = new Vector2f(0, 0), camera = (Vector2f)rw.Size / 2;
 float zoom = 1f, zoomAmount = 0.3f;
 
 
@@ -29,7 +29,7 @@ while (rw.IsOpen)
 
 void Update()
 {
-    fractal.SimpleDraw(7, zoom, rw);
+    fractal.SimpleDraw(7, zoom, rw, camera);
 }
 
 
@@ -42,15 +42,15 @@ void OnClose(object sender, EventArgs e)
 void OnMouseMove(object sender, MouseMoveEventArgs e)
 {
     Vector2f mpos = new Vector2f(e.X, e.Y);
-
+ 
     if (Mouse.IsButtonPressed(Mouse.Button.Left))
     {
         if (!lmb)
         {
             lmb = true;
-            mDisp = fractal.position - mpos;
+            mDisp = camera - mpos;
         }
-        fractal.position = mpos + mDisp;
+        camera = mpos + mDisp;
     }
     else
         lmb = false;
