@@ -12,6 +12,7 @@ namespace SerpinskyTriangle
     {
         public Vector2f[] points = new Vector2f[3];
         public Vector2f position = new Vector2f(0, 0);
+        bool toDraw = true;
 
         public Triangle(Vector2f p1, Vector2f p2, Vector2f p3)
         {
@@ -30,10 +31,14 @@ namespace SerpinskyTriangle
         
         public void Draw(Color color, RenderWindow rw, Vector2f displacement, float scale = 1)
         {
+            Vector2f p0 = (points[0] + displacement) * scale;
+            Vector2f p1 = (points[1] + displacement) * scale;
+            Vector2f p2 = (points[2] + displacement) * scale;
+
             ConvexShape shape = new ConvexShape(3);
-            shape.SetPoint(0, (points[0] + displacement) * scale);
-            shape.SetPoint(1, (points[1] + displacement) * scale);
-            shape.SetPoint(2, (points[2] + displacement) * scale);
+            shape.SetPoint(0, p0);
+            shape.SetPoint(1, p1);
+            shape.SetPoint(2, p2);
             shape.FillColor = color;
             rw.Draw(shape);
         }

@@ -10,14 +10,14 @@ namespace SerpinskyTriangle
 {
     internal class Fractal
     {
-        Triangle baseShape = new Triangle(new Vector2f(0, -250), new Vector2f(350, 250), new Vector2f(-350, 250));
+        Triangle baseShape = new Triangle(new Vector2f(0, -300), new Vector2f(400, 300), new Vector2f(-400, 300));
 
         public Fractal()
         {
 
         }
 
-        public void SimpleDraw(int depth, float zoom, RenderWindow rw, Vector2f displacement)
+        public void SimpleDraw(int depth, RenderWindow rw)
         {
             List<Triangle> oldTriangles = new List<Triangle>();
             List<Triangle> triangles = new List<Triangle>();
@@ -37,7 +37,7 @@ namespace SerpinskyTriangle
 
             foreach (Triangle t in oldTriangles)
             {
-                t.Draw(Color.White, rw, displacement, zoom);
+                t.Draw(Color.White, rw, new Vector2f(0, 0));
             }
         }
 

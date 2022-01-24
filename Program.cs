@@ -9,8 +9,8 @@ RenderWindow rw = new RenderWindow(vm, "Fractal");
 Fractal fractal = new Fractal();
 
 bool lmb = false;
-Vector2f mDisp = new Vector2f(0, 0), camera = (Vector2f)rw.Size / 2;
-float zoom = 1f, zoomAmount = 0.3f;
+Vector2f mDisp = new Vector2f(0, 0), camera = new Vector2f(0, 0);
+float zoom = 1f, zoomAmount = 0.2f;
 
 
 rw.Closed += OnClose;
@@ -29,7 +29,8 @@ while (rw.IsOpen)
 
 void Update()
 {
-    fractal.SimpleDraw(7, zoom, rw, camera);
+    rw.SetView(new View(camera * -1, new Vector2f(800, 600) * zoom));
+    fractal.SimpleDraw((int)(MathF.Log2(800 / zoom) - 2.5f), rw);
 }
 
 
@@ -59,5 +60,6 @@ void OnMouseMove(object sender, MouseMoveEventArgs e)
 
 void OnScroll(object sender, MouseWheelScrollEventArgs e)
 {
-    zoom += e.Delta * zoomAmount;
+    zoom -= e.Delta * zoomAmount * zoom;
+    camera += (camera + new Vector2f(400, 300) - new Vector2f(e.X, e.Y)) * (e.Delta * zoomAmount * zoom);
 }
