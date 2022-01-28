@@ -9,7 +9,8 @@ RenderWindow rw = new RenderWindow(vm, "Fractal");
 Fractal fractal = new Fractal();
 
 bool lmb = false;
-Vector2f mDisp = new Vector2f(0, 0), camera = new Vector2f(0, 0);
+Vector2f t = new Vector2f(0, 0);
+Vector2f mpos = t, oldMpos = t, camera = t;
 float zoom = 1f, zoomAmount = 0.2f;
 
 
@@ -42,24 +43,18 @@ void OnClose(object sender, EventArgs e)
 
 void OnMouseMove(object sender, MouseMoveEventArgs e)
 {
-    Vector2f mpos = new Vector2f(e.X, e.Y);
- 
+    oldMpos = mpos;
+    mpos = new Vector2f(e.X, e.Y);
+
     if (Mouse.IsButtonPressed(Mouse.Button.Left))
     {
-        if (!lmb)
-        {
-            lmb = true;
-            mDisp = camera - mpos;
-        }
-        camera = mpos + mDisp;
+        camera += (mpos - oldMpos) * zoom;
     }
-    else
-        lmb = false;
 }
 
 
 void OnScroll(object sender, MouseWheelScrollEventArgs e)
 {
     zoom -= e.Delta * zoomAmount * zoom;
-    camera += (camera + new Vector2f(400, 300) - new Vector2f(e.X, e.Y)) * (e.Delta * zoomAmount * zoom);
+    camera += (camera + new Vector2f(400, 300) - new Vector2f(e.X, e.Y)) * (e.Delta * zoomAmount * zoom);  // not working
 }
